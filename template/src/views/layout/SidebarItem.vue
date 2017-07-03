@@ -4,7 +4,7 @@
             <router-link v-if="!item.hidden&&item.noDropdown&&item.children.length>0" :to="item.path+'/'+item.children[0].path">
                 <el-menu-item :index="item.path+'/'+item.children[0].path">
                     <!--<icon-svg v-if='item.icon' :icon-class="item.icon"></icon-svg>-->
-                    {{item.children}}
+                    {{item.children[0]}}
                 </el-menu-item>
             </router-link>
             <el-submenu :index="item.name" v-if="!item.noDropdown&&!item.hidden">
