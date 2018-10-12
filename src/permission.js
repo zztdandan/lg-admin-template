@@ -27,12 +27,13 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      next()
-    } else {
-      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
-      NProgress.done()
-    }
+    // if (whiteList.indexOf(to.path) !== -1) {
+    //   next()
+    // } else {
+    //   next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+    //   NProgress.done()
+    // }
+    next()
   }
 })
 
