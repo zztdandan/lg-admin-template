@@ -144,7 +144,8 @@ exports.htmlPlugin = function () {
             // 文件名称
             filename: filename + '.html',
             // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
-            chunks: [filename],
+            chunks:[filename,"chunk-libs","chunk-elementUI"],
+            title: filename,
             inject: true
         }
         if (process.env.NODE_ENV === 'production') {
