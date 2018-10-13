@@ -46,28 +46,28 @@ const webpackConfig = merge(baseWebpackConfig, {
     new MiniCssExtractPlugin({
       filename: utils.assetsPath("css/[name].[contenthash:8].css"),
       chunkFilename: utils.assetsPath("css/[name].[contenthash:8].css")
-    }),
-    // generate dist index.html with correct asset hash for caching.
-    // you can customize output by editing /index.html
-    // see https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, '../dist/index.html'),
-      template: "index.html",
-      inject: true,
-      favicon: resolve("favicon.ico"),
-      title: "vue-admin-template",
-      chunks:["index","chunk-libs","chunk-elementUI"],
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      }
-      // default sort mode uses toposort which cannot handle cyclic deps
-      // in certain cases, and in webpack 4, chunk order in HTML doesn't
-      // matter anyway
-    }),
+    }),].concat(utils.htmlPlugin()).concat([
+    //   // generate dist index.html with correct asset hash for caching.
+    // // you can customize output by editing /index.html
+    // // see https://github.com/ampedandwired/html-webpack-plugin
+    // new HtmlWebpackPlugin({
+    //   filename: path.resolve(__dirname, '../dist/index.html'),
+    //   template: "index.html",
+    //   inject: true,
+    //   favicon: resolve("favicon.ico"),
+    //   title: "vue-admin-template",
+    //   chunks:["index","chunk-libs","chunk-elementUI"],
+    //   minify: {
+    //     removeComments: true,
+    //     collapseWhitespace: true,
+    //     removeAttributeQuotes: true
+    //     // more options:
+    //     // https://github.com/kangax/html-minifier#options-quick-reference
+    //   }
+    //   // default sort mode uses toposort which cannot handle cyclic deps
+    //   // in certain cases, and in webpack 4, chunk order in HTML doesn't
+    //   // matter anyway
+    // }),
     new ScriptExtHtmlWebpackPlugin({
       //`runtime` must same as runtimeChunk name. default is `runtime`
       inline: /runtime\..*\.js$/
@@ -101,7 +101,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: [".*"]
       }
     ])
-  ]
+  ])
   // .concat(utils.htmlPlugin())
   ,
   optimization: {
