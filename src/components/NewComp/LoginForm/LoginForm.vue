@@ -93,18 +93,20 @@
           return res;
         }
         let that_vue = this;
+       this.loading = true;
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             LoginPost(
               that_vue.loginForm.username,
               that_vue.loginForm.password,
-              that
+              that_vue
             ).then(res => {
-               this.loading = true;
-            console.log("成功");
-            location.href = return_url;
+               this.loading = false;
+              console.log("成功");
+              location.href = that_vue.return_url;
+            }).catch(res=>{
+              alert("登陆失败");
             });
-           
           } else {
             alert("用户名密码不匹配");
             return false;
