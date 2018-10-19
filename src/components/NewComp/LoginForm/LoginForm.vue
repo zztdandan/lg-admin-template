@@ -102,7 +102,7 @@
               that_vue
             ).then(res => {
                this.loading = false;
-              console.log("成功");
+            
               location.href = that_vue.return_url;
             }).catch(res=>{
               alert("登陆失败");
