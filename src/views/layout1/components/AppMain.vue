@@ -1,4 +1,5 @@
 <template>
+<!-- 这是存储iframe页面的控件 -->
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <!-- or name="fade" -->

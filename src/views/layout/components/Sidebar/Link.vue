@@ -7,33 +7,33 @@
 </template>
 
 <script>
-import { validateURL } from '@/utils/validate'
+  import { validateURL } from "@/utils/validate";
 
-export default {
-  props: {
-    to: {
-      type: String,
-      required: true
-    }
-  },
-  methods: {
-    isExternalLink(routePath) {
-      return validateURL(routePath)
+  export default {
+    props: {
+      to: {
+        type: String,
+        required: true
+      }
     },
-    linkProps(url) {
-      if (this.isExternalLink(url)) {
-        return {
-          is: 'a',
-          href: url,
-          target: '_blank',
-          rel: 'noopener'
+    methods: {
+      isExternalLink(routePath) {
+        return validateURL(routePath);
+      },
+      linkProps(url) {
+        if (this.isExternalLink(url)) {
+          return {
+            is: "a",
+            href: url,
+            target: "_blank",
+            rel: "noopener"
+          };
         }
-      }
-      return {
-        is: 'router-link',
-        to: url
+        return {
+          is: "router-link",
+          to: url
+        };
       }
     }
-  }
-}
+  };
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <!-- 目前的sidebar先不做树形后续再实现 -->
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :show-timeout="200"

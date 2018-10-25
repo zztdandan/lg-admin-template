@@ -1,21 +1,30 @@
 <template>
   <!-- 总体布局使用element自带的布局 -->
-  <el-container>
-    <el-aside>
-      <sidebar></sidebar>
-    </el-aside>
+  <div :class="classObj" class="app-wrapper">
     <el-container>
-      <el-header>
-        <navbar></navbar>
-        <tab-tool></tab-tool>
-      </el-header>
-      <el-main>
+      <el-aside>
+        <!-- 侧边栏 -->
+        <sidebar></sidebar>
+      </el-aside>
+      <el-container>
+        <!-- navbar，将toggle取消，放在别的位置 -->
+        <el-header>
+          <navbar></navbar>
+          <!-- tab管理层，用vuex进行管理 -->
+          <tab-tool></tab-tool>
+        </el-header>
 
-        <app-main></app-main>
-      </el-main>
-      <el-footer><lg-footer></lg-footer></el-footer>
+        <el-main>
+          <!-- 主要页面iframe内容 -->
+          <app-main></app-main>
+        </el-main>
+        <el-footer>
+          <!-- 页脚 -->
+          <lg-footer></lg-footer>
+        </el-footer>
+      </el-container>
     </el-container>
-  </el-container>
+  </div>
   <!-- <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar class="sidebar-container"/>
@@ -27,8 +36,7 @@
 </template>
 
 <script>
-  import { Navbar, Sidebar, AppMain, LgFooter,TabTool } from "./components";
-  import ResizeMixin from "./mixin/ResizeHandler";
+  import { Navbar, Sidebar, AppMain, LgFooter, TabTool } from "./components";
 
   export default {
     name: "Layout",
@@ -39,7 +47,7 @@
       LgFooter,
       TabTool
     },
-    mixins: [ResizeMixin],
+
     computed: {
       sidebar() {
         return this.$store.state.app.sidebar;
@@ -75,14 +83,5 @@
     position: fixed;
     top: 0;
   }
-}
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
 }
 </style>

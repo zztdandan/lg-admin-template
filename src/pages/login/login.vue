@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <login-form :login_post_api="login_api" :return_url="return_url">
+    <login-form :login_post_api="login_api" @login_cb="Login_SetToken_return">
       <template slot="login_title">柳钢系统测试</template>
     </login-form>
   </div>
@@ -8,16 +8,28 @@
 
 <script>
   import LoginForm from "components/NewComp/LoginForm/LoginForm.vue";
-
+  import { getToken, setToken, removeToken } from "@/utils/auth";
   export default {
     name: "LoginPage",
     data: function() {
       return {
         login_api: "/api/login_post",
-        return_url:"/#/"
+        return_url: "/#/"
       };
     },
-    methods: {},
+    methods: {
+      //这里写一个login-form传过来的后续处理函数，主要用于处理token，转到正式页面等问题
+      Login_SetToken_return: function(data) {
+        let that_vue = this;
+        try {
+          console.log(data);
+          setToken(data.token);
+          location.href = that_vue.return_url;
+        } catch(e) {
+          alert("登陆信息错误");
+        }
+      }
+    },
     components: {
       "login-form": LoginForm
     }

@@ -37,11 +37,6 @@
       login_post_api: {
         type: String,
         default: "/api/login_post"
-      },
-      //配置的验证后跳转页面
-      return_url: {
-        type: String,
-        default: "/#/"
       }
     },
     data() {
@@ -93,22 +88,29 @@
           return res;
         }
         let that_vue = this;
-       this.loading = true;
+        // 页面进入load模式，无法操作
+        this.loading = true;
         this.$refs.loginForm.validate(valid => {
           if (valid) {
             LoginPost(
               that_vue.loginForm.username,
               that_vue.loginForm.password,
               that_vue
-            ).then(res => {
-               this.loading = false;
-            
-              location.href = that_vue.return_url;
-            }).catch(res=>{
-              alert("登陆失败");
-            });
+            )
+              .then(res => {
+                if (res.code === 0) {
+                  that_vue.loading = false;
+                  that_vue.$emit("login_cb", res.data);
+                } else {
+                  that_vue.loading = false;
+                }
+              })
+              .catch(res => {
+                that_vue.loading = false;
+                alert("登陆失败");
+              });
           } else {
-            alert("用户名密码不匹配");
+            alert("登陆信息不合法");
             return false;
           }
         });
