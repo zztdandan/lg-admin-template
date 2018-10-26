@@ -39,10 +39,12 @@
               // 返回出错了
               throw new Error("获取权限信息失败");
             } else {
+              //登陆操作
               let login = that_vue.$store.dispatch(
                 "User_Login",
                 res_user_info.data
               );
+              //设置权限、角色、用户侧边栏目录
               let res = await that_vue.$store.dispatch(
                 "SetAuthMenuRole",
                 res_auth.data,
