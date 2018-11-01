@@ -6,8 +6,11 @@ const getters = {
   ACTIVED_PAGE: state => {
     return state.tabs.active_tab;
   },
+  TABS: state => {
+    return state.tabs.tab_list;
+  },
   SIDEBAR_COLLAPSE: state => {
-    return state.stats.siderbar.opened;
+    return state.stats.sidebar.opened;
   }
 };
 export default getters;

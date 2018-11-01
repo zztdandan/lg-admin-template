@@ -1,8 +1,8 @@
 <template>
   <!-- 总体布局使用element自带的布局 -->
-  <div :class="classObj" class="app-wrapper">
+  <div :class="classObj">
     <el-container>
-      <el-aside>
+      <el-aside width="fit-content">
         <!-- 侧边栏 -->
         <sidebar></sidebar>
       </el-aside>
@@ -39,7 +39,7 @@
   import { Navbar, Sidebar, AppMain, LgFooter, TabTool } from "./components";
 
   export default {
-    name: "Layout",
+    name: "lg-layout",
     components: {
       Navbar,
       Sidebar,
@@ -50,38 +50,32 @@
 
     computed: {
       sidebar() {
-        return this.$store.state.app.sidebar;
+        return this.$store.state.stats.sidebar;
       },
-      device() {
-        return this.$store.state.app.device;
-      },
+      // device() {
+      //   return this.$store.state.app.device;
+      // },
       classObj() {
         return {
-          hideSidebar: !this.sidebar.opened,
-          openSidebar: this.sidebar.opened,
-          withoutAnimation: this.sidebar.withoutAnimation,
-          mobile: this.device === "mobile"
+          // hideSidebar: !this.sidebar.opened,
+          // openSidebar: this.sidebar.opened
         };
       }
     },
     methods: {
-      handleClickOutside() {
-        this.$store.dispatch("CloseSideBar", { withoutAnimation: false });
-      }
+      // handleClickOutside() {
+      //   this.$store.dispatch("CloseSideBar", { withoutAnimation: false });
+      // }
     }
   };
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-@import "src/styles/mixin.scss";
+<style  scoped>
+
 .app-wrapper {
-  @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;
-  &.mobile.openSidebar {
-    position: fixed;
-    top: 0;
-  }
+ 
 }
 </style>

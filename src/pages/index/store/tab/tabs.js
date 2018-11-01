@@ -1,23 +1,21 @@
 // 这是存储框架tab相关功能的store
-import linqjs from "linqjs";
+import "linqjs";
 import { stat } from "fs";
 const tabs_module = {
   state: {
     //   已经打开的全部tab信息
     tab_list: [],
     // 登陆状态，由于不确定登陆状态如何，暂定占用一个存储位，暂不写函数
-    active_tab: { order: 0, id: "main_index", url: "/#/main", title: "main" }
+    active_tab: {}
   },
   mutations: {
     ADD_TAB: function(state, tab_info) {
       try {
-        const same_tab_count = state.tab_list
-          .where(x => x.id === tab_info.id)
-          .count();
+        const same_tab_count = 0;
         if (same_tab_count > 0) {
           // 已有活动的tab了
         } else {
-          tab_info.order = state.tab_list.count();
+          tab_info.order = state.tab_list.length;
           state.tab_list.push(tab_info);
         }
       } catch (e) {
@@ -26,10 +24,11 @@ const tabs_module = {
     },
     // 切换当前的活动页面为输入的页面
     TOGGLE_ACTIVE_TAB: function(state, tab_id) {
-      const same_tab_count = state.tab_list.where(x => x.id === tab_id).count();
-      if (same_tab_count > 0) {
+      let a = 1;
+      const same_tab = state.tab_list.where(x => x.id === tab_id);
+      if (same_tab.length > 0) {
         // 已有活动的tab了
-        state.active_tab = same_tab_count.first();
+        state.active_tab = same_tab.first();
       } else {
         throw new Error("非法切换请求");
         // 没有活动的tab，是非法请求

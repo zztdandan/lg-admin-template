@@ -1,5 +1,5 @@
 <template>
-<!-- 这是存储iframe页面的控件 -->
+  <!-- 这是存储iframe页面的控件 -->
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <!-- or name="fade" -->
@@ -10,14 +10,24 @@
 </template>
 
 <script>
-export default {
-  name: 'AppMain',
-  computed: {
-    // key() {
-    //   return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
-    // }
-  }
-}
+  export default {
+    name: "AppMain",
+    computed: {
+      // key() {
+      //   return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
+    },
+    data:function() {
+      return {
+        active_tab: this.$store.getters.ACTIVED_PAGE
+      };
+    },
+    watch: {
+      active_tab(newval, oldval) {
+        let a_id = newval.id;
+        this.$router.push({ name: "home_menu", params: { page_id: a_id } });
+      }
+    }
+  };
 </script>
 
 <style scoped>

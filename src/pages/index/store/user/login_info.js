@@ -1,7 +1,7 @@
 // 这是存储用户登陆信息的store
 import { getToken, setToken, removeToken } from "@/utils/auth";
-import { Resolver } from "dns";
-import { rejects } from "assert";
+// import { Resolver } from "dns";
+// import { rejects } from "assert";
 import { resolve } from "path";
 const login_info_module = {
   state: {
