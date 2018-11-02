@@ -11,7 +11,12 @@ const tabs_module = {
   mutations: {
     ADD_TAB: function(state, tab_info) {
       try {
-        const same_tab_count = 0;
+        let same_tab_count = 0;
+        let curr_tab = {};
+        if (state.tab_list.length != 0) {
+          curr_tab = state.tab_list.where(x => x.id == tab_info.id);
+          same_tab_count = curr_tab.length;
+        }
         if (same_tab_count > 0) {
           // 已有活动的tab了
         } else {
@@ -24,8 +29,10 @@ const tabs_module = {
     },
     // 切换当前的活动页面为输入的页面
     TOGGLE_ACTIVE_TAB: function(state, tab_id) {
-      let a = 1;
+      console.log(3);
+      const a = 1;
       const same_tab = state.tab_list.where(x => x.id === tab_id);
+      console.log(same_tab);
       if (same_tab.length > 0) {
         // 已有活动的tab了
         state.active_tab = same_tab.first();
@@ -35,13 +42,12 @@ const tabs_module = {
       }
     },
     // 删除某个tab
-    DEL_TAB: function(state, tab_info) {
-      const same_tab_count = state.tab_list
-        .where(x => x.id === tab_info.id)
-        .count();
-      if (same_tab_count > 0) {
+    DEL_TAB: function(state, tab_info_id) {
+      const same_tab = state.tab_list.where(x => x.id === tab_info_id);
+
+      if (same_tab.length > 0) {
         // 找到了指定的tab
-        const todo_del_tab = same_tab_count.first();
+        const todo_del_tab = same_tab.first();
         // 大于该order的tab中order-1,保持order与排序一致的性质
         state.tab_list
           .where(x => x.order > todo_del_tab.order)
@@ -61,7 +67,7 @@ const tabs_module = {
       const a = state.tab_list.orderBy(x => {
         return Math.abs(x.order - order_tab);
       });
-      state.active_tab = a;
+      state.active_tab = a.first();
     }
   },
   actions: {
@@ -78,9 +84,11 @@ const tabs_module = {
             title: menu_info.name
           };
           // 增加页面
+          console.log(1);
           commit("ADD_TAB", tmp_tab_info);
+          console.log(2);
           // 切到该页面
-          commit("TOGGLE_ACTIVE_TAB", menu_info.code);
+          commit("TOGGLE_ACTIVE_TAB", tmp_tab_info.id);
           resolve(0);
         } catch (e) {
           reject(e);
@@ -89,13 +97,23 @@ const tabs_module = {
     },
     // 关闭一个tab
     close_page: ({ commit, state }, page_id) => {
-      const todo_del_tab = state.tab_list.where(x => x.id === page_id).first();
-      commit("DEL_TAB", page_id);
+      return new Promise((resolve, reject) => {
+        const todo_del_tab = state.tab_list
+          .where(x => x.id === page_id)
+          .first();
+        commit("DEL_TAB", page_id);
 
-      // 特殊处理，关闭一个正在打开的标签时如何做。如果关闭的不是正在打开的标签，则不作处理
-      if (state.active_tab.id === page_id) {
-        commit("TOGGLE_FROM_DEL_TAB", todo_del_tab.order);
-      }
+        // 特殊处理，如果删除页面后tab_list没有任何启动页面了，那么不做任何切换
+        if (state.tab_list.length == 0) {
+          // do nothing
+        } else {
+          // 特殊处理，关闭一个正在打开的标签时如何做。如果关闭的不是正在打开的标签，则不作处理
+          if (state.active_tab.id === page_id) {
+            commit("TOGGLE_FROM_DEL_TAB", todo_del_tab.order);
+          }
+        }
+        resolve(state);
+      });
     },
     // 切页面
     toggle_page: ({ commit }, page_id) => {

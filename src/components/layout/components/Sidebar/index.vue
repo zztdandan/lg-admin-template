@@ -53,3 +53,8 @@
   width: fit-content;
 }
 </style>
+<style>
+.el-menu{
+      border-right: solid 0px #e6e6e6;
+}
+</style>
