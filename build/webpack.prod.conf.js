@@ -205,77 +205,77 @@ if (config.build.generateAnalyzerReport || config.build.bundleAnalyzerReport) {
 
 module.exports = webpackConfig;
 
- function htmlPlugin1() {
-  let entryHtml = glob.sync(PAGE_PATH + "/*/*.html");
-  let arr = [];
-  entryHtml.forEach(filePath => {
-    let filename = filePath.substring(
-      filePath.lastIndexOf("/") + 1,
-      filePath.lastIndexOf(".")
-    );
-    let conf = {
-      filename: path.resolve(__dirname, "../dist/" + filename + ".html"),
-      template: path.resolve(
-        __dirname,
-        "../src/pages/" + filename + "/" + filename + ".html"
-      ),
-      // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
-      chunks: [filename, "chunk-libs", "chunk-elementUI"],
-      title: filename,
-      inject: true
-    };
-    if (process.env.NODE_ENV === "production") {
-      conf = merge(conf, {
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeAttributeQuotes: true
-        }
-        // chunksSortMode: 'dependency'
-      });
-    }
-    arr.push(new HtmlWebpackPlugin(conf));
-  });
-  return arr;
-};
+//  function htmlPlugin1() {
+//   let entryHtml = glob.sync(PAGE_PATH + "/*/*.html");
+//   let arr = [];
+//   entryHtml.forEach(filePath => {
+//     let filename = filePath.substring(
+//       filePath.lastIndexOf("/") + 1,
+//       filePath.lastIndexOf(".")
+//     );
+//     let conf = {
+//       filename: path.resolve(__dirname, "../dist/" + filename + ".html"),
+//       template: path.resolve(
+//         __dirname,
+//         "../src/pages/" + filename + "/" + filename + ".html"
+//       ),
+//       // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
+//       chunks: [filename, "chunk-libs", "chunk-elementUI"],
+//       title: filename,
+//       inject: true
+//     };
+//     if (process.env.NODE_ENV === "production") {
+//       conf = merge(conf, {
+//         minify: {
+//           removeComments: true,
+//           collapseWhitespace: true,
+//           removeAttributeQuotes: true
+//         }
+//         // chunksSortMode: 'dependency'
+//       });
+//     }
+//     arr.push(new HtmlWebpackPlugin(conf));
+//   });
+//   return arr;
+// };
 
- function htmlPlugin2() {
-  return [
-    new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, "../dist/index.html"),
-      template: path.resolve(__dirname, "../src/pages/index/index.html"),
-      inject: true,
-      favicon: resolve("favicon.ico"),
-      title: "index",
-      chunks: ["index", "chunk-libs", "chunk-elementUI"],
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      }
-      // default sort mode uses toposort which cannot handle cyclic deps
-      // in certain cases, and in webpack 4, chunk order in HTML doesn't
-      // matter anyway
-    }),
-    new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, "../dist/cell.html"),
-      template: path.resolve(__dirname, "../src/pages/cell/cell.html"),
-      inject: true,
-      favicon: resolve("favicon.ico"),
-      title: "cell",
-      chunks: ["cell", "chunk-libs", "chunk-elementUI"],
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-      }
-      // default sort mode uses toposort which cannot handle cyclic deps
-      // in certain cases, and in webpack 4, chunk order in HTML doesn't
-      // matter anyway
-    })
-  ];
-};
+//  function htmlPlugin2() {
+//   return [
+//     new HtmlWebpackPlugin({
+//       filename: path.resolve(__dirname, "../dist/index.html"),
+//       template: path.resolve(__dirname, "../src/pages/index/index.html"),
+//       inject: true,
+//       favicon: resolve("favicon.ico"),
+//       title: "index",
+//       chunks: ["index", "chunk-libs", "chunk-elementUI"],
+//       minify: {
+//         removeComments: true,
+//         collapseWhitespace: true,
+//         removeAttributeQuotes: true
+//         // more options:
+//         // https://github.com/kangax/html-minifier#options-quick-reference
+//       }
+//       // default sort mode uses toposort which cannot handle cyclic deps
+//       // in certain cases, and in webpack 4, chunk order in HTML doesn't
+//       // matter anyway
+//     }),
+//     new HtmlWebpackPlugin({
+//       filename: path.resolve(__dirname, "../dist/cell.html"),
+//       template: path.resolve(__dirname, "../src/pages/cell/cell.html"),
+//       inject: true,
+//       favicon: resolve("favicon.ico"),
+//       title: "cell",
+//       chunks: ["cell", "chunk-libs", "chunk-elementUI"],
+//       minify: {
+//         removeComments: true,
+//         collapseWhitespace: true,
+//         removeAttributeQuotes: true
+//         // more options:
+//         // https://github.com/kangax/html-minifier#options-quick-reference
+//       }
+//       // default sort mode uses toposort which cannot handle cyclic deps
+//       // in certain cases, and in webpack 4, chunk order in HTML doesn't
+//       // matter anyway
+//     })
+//   ];
+// };

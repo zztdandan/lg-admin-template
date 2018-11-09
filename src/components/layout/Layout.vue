@@ -8,19 +8,24 @@
       </el-aside>
       <el-container>
         <!-- navbar，将toggle取消，放在别的位置 -->
-        <el-header>
-          <navbar></navbar>
+        <el-header style="height:42px">
+          <!-- <div class="el-header"> -->
+
           <!-- tab管理层，用vuex进行管理 -->
-          <tab-tool></tab-tool>
+          <tab-tool class="tab-tool-fl"></tab-tool>
+          <user-tab class="user-tab-fl"></user-tab>
+          <!-- </div> -->
         </el-header>
 
         <el-main>
           <!-- 主要页面iframe内容 -->
-          <app-main></app-main>
+          <app-main class="app-main-calc"></app-main>
         </el-main>
-        <el-footer>
+        <el-footer style="height:40px">
           <!-- 页脚 -->
+
           <lg-footer></lg-footer>
+
         </el-footer>
       </el-container>
     </el-container>
@@ -36,7 +41,7 @@
 </template>
 
 <script>
-  import { Navbar, Sidebar, AppMain, LgFooter, TabTool } from "./components";
+  import { Navbar, Sidebar, AppMain, LgFooter, TabTool, UserTab } from "./components";
 
   export default {
     name: "lg-layout",
@@ -45,7 +50,8 @@
       Sidebar,
       AppMain,
       LgFooter,
-      TabTool
+      TabTool,
+      UserTab
     },
 
     computed: {
@@ -71,11 +77,42 @@
 </script>
 
 <style  scoped>
-
 .app-wrapper {
   position: relative;
   height: 100%;
   width: 100%;
- 
+}
+.el-main {
+  padding: 0px;
+}
+.el-header {
+  padding: 0px;
+  width: 100%;
+  display: block;
+  height: 42px;
+  margin-bottom: 3px;
+  border: 1px solid transparent;
+  box-shadow: 0 0 3px rgb(0, 0, 0);
+}
+.el-footer {
+  padding: 0px;
+  height: 40px;
+  width: 100%;
+  display: block;
+}
+.tab-tool-fl {
+  position: relative;
+  float: left;
+  width: calc(100% - 80px);
+  min-width: 300px;
+  overflow-y: hidden;
+}
+.user-tab-fl {
+  position: relative;
+  float: left;
+  width: 80px;
+}
+.app-main-calc {
+  min-height: calc(100vh - 85px);
 }
 </style>

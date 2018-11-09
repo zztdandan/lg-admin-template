@@ -1,6 +1,7 @@
 <template>
+
   <div>
-  测试页面11111
+<input v-model="aaa" type="text"/>
   </div>
 </template>
 
@@ -8,5 +9,10 @@
 
   export default {
     name: "main-app",   
+    data:function(){
+      return{
+        aaa:1
+      }
+    }
   };
 </script>

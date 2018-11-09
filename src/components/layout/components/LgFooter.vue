@@ -1,6 +1,6 @@
 <template>
     <div class="lg-footer">
-        <p>页脚</p>
+        页脚
     </div>
 </template>
 
@@ -12,7 +12,7 @@
 
 <style scoped>
 .lg-footer {
-  height: 30px;
+  height:100%;
   background: #665566;
   color: #ffffff;
 }

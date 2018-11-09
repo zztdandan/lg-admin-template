@@ -1,41 +1,63 @@
 <template>
   <div>
-    <h3>url:{{page_url}}</h3>
-    <h3>router_path:{{router_path}}</h3>
-    <h3>params:{{router_path}}</h3>
-    <iframe :src="page_url" frameborder="0" class="frame-temp"></iframe>
+    <!-- <h3>url:{{page_url}}</h3> -->
+
+    <iframe :id="inner_page_id" :src="page_url" frameborder="0" :height="iframe_height"  class="frame-temp"></iframe>
+
+    <!-- <div v-html="html_content"></div> -->
   </div>
 </template>
 
 <script>
   export default {
     name: "frame-temp",
-    data: function() {
-      return {
-        page: this.$store.getters.ACTIVED_PAGE
-      };
-    },
-    computed: {
-      page_url: function() {
-        return this.$store.getters.ACTIVED_PAGE.url;
+    props: {
+      url: {
+        type: String,
+        default: ""
       },
-      router_path: function() {
-        return this.$route.path;
-      },
-      router_params: function() {
-        return this.$route.params;
+      page_id: {
+        type: String,
+        default: ""
       }
     },
+    data: function() {
+      let page_url_temp = "";
+      if (this.url != "") {
+        page_url_temp = this.url;
+      } else {
+        page_url_temp = this.$store.getters.ACTIVED_PAGE.url;
+      }
+      return {
+        page: this.$store.getters.ACTIVED_PAGE,
+        page_url: page_url_temp,
+        iframe_height:"100%",
+        inner_page_id:"iframe_"+this.page_id
+        // html_content: ""
+      };
+    },
+    computed: {},
+    watch:{      
+    },
     mounted: function() {
-      // 查看一下store的情况，如果没有对应store就进入了页面，说明这个页面是直接敲url进来的，
-      // 这个情况下由于没有在index store预先读取信息，所以需要重新走一遍登陆等流程才行
+      let that_vue = this;
+
+      // let xhr = new XMLHttpRequest();
+      // xhr.onreadystatechange = function() {
+      //   if (xhr.readystate == 4 && xhr.status == 200) {
+      //     that_vue.html_content = xhr.responseText;
+      //   }
+      // };
+      // xhr.open("GET", that_vue.url, true);
+      // xhr.send();
     }
   };
 </script>
 
 <style scoped>
 .frame-temp {
-  width:100%;
-  height:max-content;
+  width: 100%;
+ min-height: calc(100vh - 105px);
+  /* height:-webkit-fill-available; */
 }
 </style>

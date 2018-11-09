@@ -9,3 +9,4 @@ export { default as TabTool } from "./TabTool";
 export { default as AppMain } from "./AppMain";
 // 底栏插件
 export { default as LgFooter } from "./LgFooter";
+export { default as UserTab } from "./UserTab";

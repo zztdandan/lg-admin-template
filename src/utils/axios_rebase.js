@@ -5,7 +5,6 @@ import { getToken } from "@/utils/auth";
 import global_config from "@/global_config";
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.BASE_API, // api 的 base_url
   timeout: 5000 // 请求超时时间
 });
 
@@ -26,8 +25,11 @@ service.interceptors.request.use(
 
 // response 拦截器
 // 此处根据业务详细需求来配置
-service.interceptors.response.use(error => {
-  console.log("err", error); // debug用，axios返回错误
-});
+// ?看了log，这里拦截后第一个参数不一定是error，如果用error拦截会报错，所以不要这个了。用前面那个reject来弹出错误
+// service.interceptors.response.use((error, data) => {
+//   if (error) {
+//     console.log("err", error); // debug用，axios返回错误
+//   }
+// });
 
 export default service;

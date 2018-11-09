@@ -21,12 +21,12 @@
     },
     methods: {
       leaf_click: function() {
-        // console.log(this.item.url);
-        this.$store.dispatch("open_page",this.item);
-        this.$router.push({
-          name: "home_menu",
-          params: { page_id: this.item.code }
-        });
+        // console.log("按钮", this.item);
+        this.$store.dispatch("open_page", this.item);
+        // this.$router.push({
+        //   name: "home_menu",
+        //   params: { page_id: this.item.code }
+        // });
       }
     }
   };

@@ -11,6 +11,9 @@ const getters = {
   },
   SIDEBAR_COLLAPSE: state => {
     return state.stats.sidebar.opened;
+  },
+  USER_INFO: state => {
+    return state.login_info.user_info;
   }
 };
 export default getters;

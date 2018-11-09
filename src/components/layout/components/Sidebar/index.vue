@@ -1,11 +1,11 @@
 <template>
 
   <!-- 实现sidebar各项设置 -->
-  <el-scrollbar wrap-class="scrollbar-wrapper" :class="navbar_class" class="side-navbar">
+  <div :class="navbar_class" class="side-navbar">
     <el-menu :show-timeout="100" :default-active="actived_page" :collapse="isCollapse" mode="vertical" background-color="#304156" text-color="#bfcbd9" active-text-color="#409EFF">
       <sidebar-item v-for="menu_item in root_menu" :key="menu_item.code" :one_menu_item="menu_item" :total_list="page_menu" />
     </el-menu>
-  </el-scrollbar>
+  </div>
 </template>
 
 <script>
@@ -43,18 +43,21 @@
 .side-navbar {
   height: 100%;
   background-color: rgb(48, 65, 86);
-  border-right: solid 1px #e6e6e6;
-  padding: -1px
+  /* border-right: solid 1px #e6e6e6; */
+  padding: -1px;
+  overflow: hidden;
 }
 .collapse-nav {
   width: fit-content;
+  overflow: hidden;
 }
 .nocollapse-nav {
   width: fit-content;
+  overflow: hidden;
 }
 </style>
 <style>
-.el-menu{
-      border-right: solid 0px #e6e6e6;
+.el-menu {
+  border-right: solid 0px #e6e6e6;
 }
 </style>

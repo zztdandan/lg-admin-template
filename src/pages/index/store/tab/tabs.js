@@ -29,10 +29,10 @@ const tabs_module = {
     },
     // 切换当前的活动页面为输入的页面
     TOGGLE_ACTIVE_TAB: function(state, tab_id) {
-      console.log(3);
+      // console.log(3);
       const a = 1;
       const same_tab = state.tab_list.where(x => x.id === tab_id);
-      console.log(same_tab);
+      // console.log(same_tab);
       if (same_tab.length > 0) {
         // 已有活动的tab了
         state.active_tab = same_tab.first();
@@ -84,9 +84,9 @@ const tabs_module = {
             title: menu_info.name
           };
           // 增加页面
-          console.log(1);
+          // console.log(1);
           commit("ADD_TAB", tmp_tab_info);
-          console.log(2);
+          // console.log(2);
           // 切到该页面
           commit("TOGGLE_ACTIVE_TAB", tmp_tab_info.id);
           resolve(0);
@@ -104,7 +104,9 @@ const tabs_module = {
         commit("DEL_TAB", page_id);
 
         // 特殊处理，如果删除页面后tab_list没有任何启动页面了，那么不做任何切换
+        // 特殊处理，如果删除页面后没有任何页面，则active_tab清空
         if (state.tab_list.length == 0) {
+          state.active_tab={};
           // do nothing
         } else {
           // 特殊处理，关闭一个正在打开的标签时如何做。如果关闭的不是正在打开的标签，则不作处理

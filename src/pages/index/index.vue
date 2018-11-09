@@ -9,7 +9,9 @@
   import { getToken, setToken, removeToken } from "@/utils/auth";
   import { Router, http, cli } from "director";
   import global_config from "@/global_config";
-
+  import check_token from "./utils/check_token";
+  import check_route from "./utils/check_route";
+  import doPostMessage from "./utils/doPostMessage";
   export default {
     name: "main-app",
     data: () => {
@@ -21,48 +23,47 @@
     created: function() {
       let that_vue = this;
       try {
-        async function doasync() {
+        //  做两个登陆处理：
+        //  1、check一下token信息，看是否符合登陆要求。如果符合，则将登陆信息塞进来，如果不符合，则弹到登陆页面
+        //  2、check route信息，如果route中有params，则先检查这个page是否有权限访问，如果有，切换activetab，如果没有，则弹到登陆页面
+        that_vue.$router.beforeEach((to, from, next) => {
+          check_route(to, that_vue, that_vue.$store)
+            .then(res => {
+              next();
+            })
+            .catch(err => {
+              console.log("检查router出错", err);
+            });
+        });
+        check_token(that_vue, that_vue.$ajax)
+          .then(res => {
+            check_route(that_vue.$route, that_vue, that_vue.$store)
+              .then(res => {})
+              .catch(err => {
+                console.log("检查router出错", err);
+              });
+          })
+          .catch(err => {
+            console.log("检查token出错", err);
+            location.href = "/login.html#/";
+          });
+
+        //注册postMessage事件
+        window.addEventListener("message", function(rs) {
+          console.log(rs);
           try {
-            //一系列登录后权限、用户信息获取。都是用token去找后台
-            let token = getToken();
-            let axios = that_vue.$ajax;
-            let { data: res_menu } = await axios.get("/api/get_menu");
-            // console.log(res_menu);
-            let { data: res_auth } = await axios.get("/api/get_user_auth");
-            // console.log(res_auth);
-            let { data: res_role } = await axios.get("/api/get_user_role");
-            // console.log(res_role);
-            let { data: res_user_info } = await axios.get("/api/user_info");
-            // console.log("user_info", res_user_info);
-            if (
-              res_menu.code != 0 ||
-              res_auth.code != 0 ||
-              res_role.code != 0 ||
-              res_user_info.code != 0
-            ) {
-              // 返回出错了
-              // console.log("1",  res_menu.code,"2", res_auth.code,"3", res_role.code ,"4", res_user_info.code)
-              throw new Error("获取权限信息失败");
-            } else {
-              //登陆操作
-              let login = that_vue.$store.dispatch(
-                "User_Login",
-                res_user_info.data
-              );
-              //设置权限、角色、用户侧边栏目录
-              let res1 = await that_vue.$store.dispatch("SetAuth", res_auth.data);
-              let res2 = await that_vue.$store.dispatch("SetMenu", res_menu.data);
-              let res3 = await that_vue.$store.dispatch("SetRole", res_role.data);
+            let rsdata=rs.data;
+            if (typeof rsdata.type != "undefined") {
+              doPostMessage(rsdata, that_vue).then(res => {
+                console.log(res);
+              });
             }
-          } catch (e) {
-            throw new Error(e);
-          }
-        }
-        doasync();
+          } catch (e) {}
+          // 单独引入一个函数，进行rs.data的处理
+        });
       } catch (e) {
         // 如果读取登陆token失败，那么登陆失败，返回登录页面
-        console.log("登陆初始化错误，跳转");
-        location.href = that_vue.login_url;
+        console.log("登陆初始化错误", e);
       }
     },
     components: {
@@ -70,3 +71,5 @@
     }
   };
 </script>
+
+
