@@ -1,5 +1,5 @@
 // 针对postMessage数据的处理方式
-// import setIframeHeight from "./PostMessageFunction/setIframeHeight.js";
+import { setIframeHeight1 } from "./PostMessageFunction/setIframeHeight.js";
 export default async function(rsdata, that_vue) {
   try {
     let req = rsdata;
@@ -16,12 +16,20 @@ export default async function(rsdata, that_vue) {
   }
 }
 
-//设置高度函数
+// 设置高度函数
 function setIframeHeight({ iframe_name, iframe_height }, that_vue) {
+  console.log(iframe_name);
+  console.log(iframe_height);
   let a = iframe_height;
   if (typeof iframe_height === "number") {
     a = iframe_height + "px";
   }
   console.log("doset");
   $("#" + iframe_name).attr("height", a);
+}
+
+// 关闭tab
+function closeIframe({ name }, that_vue) {
+  console.log("关闭tab", name);
+  that_vue.$store.dispatch("close_page", name);
 }

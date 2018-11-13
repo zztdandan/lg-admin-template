@@ -20,6 +20,7 @@ const tabs_module = {
         if (same_tab_count > 0) {
           // 已有活动的tab了
         } else {
+          // 列表中添加一个tab
           tab_info.order = state.tab_list.length;
           state.tab_list.push(tab_info);
         }

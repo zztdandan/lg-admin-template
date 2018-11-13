@@ -1,6 +1,6 @@
 <template>
-    <div>
-        这是没有地址时的空页面
+    <div class="blk">
+
     </div>
 </template>
 
@@ -11,4 +11,8 @@
 </script>
 
 <style scoped>
+.blk {
+  height: 0px;
+  width: 0px;
+}
 </style>

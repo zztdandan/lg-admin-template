@@ -50,12 +50,12 @@
 
         //注册postMessage事件
         window.addEventListener("message", function(rs) {
-          console.log(rs);
+          // console.log(rs);
           try {
             let rsdata=rs.data;
             if (typeof rsdata.type != "undefined") {
               doPostMessage(rsdata, that_vue).then(res => {
-                console.log(res);
+                // console.log(res);
               });
             }
           } catch (e) {}

@@ -13,7 +13,7 @@
 <style scoped>
 .lg-footer {
   height:100%;
-  background: #665566;
+  background: #4c645a;
   color: #ffffff;
 }
 </style>

@@ -91,8 +91,7 @@
   display: block;
   height: 42px;
   margin-bottom: 3px;
-  border: 1px solid transparent;
-  box-shadow: 0 0 3px rgb(0, 0, 0);
+  box-shadow: 0 0 10px rgba(48, 65, 86, 0.65);
 }
 .el-footer {
   padding: 0px;
@@ -105,12 +104,14 @@
   float: left;
   width: calc(100% - 80px);
   min-width: 300px;
+  min-height: 2rem;
   overflow-y: hidden;
 }
 .user-tab-fl {
   position: relative;
   float: left;
   width: 80px;
+    min-height: 2.5rem;
 }
 .app-main-calc {
   min-height: calc(100vh - 85px);

@@ -1,45 +1,70 @@
 <template>
-    <!-- 这是显示user信息的右上角模块 -->
-    <div class="user-tab-over">
-        <span class="user-tab-avatar">
-           <img :src="avatar_url"/>
-        </span>
-        <span class="lgui-down-arrow user-tab-da"></span>
-    </div>
+  <!-- 这是显示user信息的右上角模块 -->
+
+  <div class="user-tab">
+    <el-dropdown>
+      <span class="el-dropdown-link">
+        <div class="user-tab-cover">
+          <span class="user-tab-avatar">
+            <img class="user-info-img" :src="avatar_url" />
+          </span>
+          <span class="user-tab-avatar user-tab-da">
+            <span class="lgui-down-arrow"></span>
+          </span>
+        </div>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>用户名:{{user_name}}</el-dropdown-item>
+        <el-dropdown-item divided>
+          <router-link to="/user_info">用户信息</router-link></el-dropdown-item>
+        <el-dropdown-item>登出</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </div>
+
 </template>
 
 <script>
-    export default {
-      name: "user-tab",
-      data: function() {
-        return {};
+  export default {
+    name: "user-tab",
+    data: function() {
+      return {};
+    },
+    computed: {
+      avatar_url() {
+        return this.$store.getters.USER_INFO.user_avatar;
       },
-      computed: {
-        avatar_url() {
-          return this.$store.getters.USER_INFO.user_avatar;
-        },
-        user_name() {
-          return this.$store.getters.USER_INFO.user_name;
-        }
+      user_name() {
+        return this.$store.getters.USER_INFO.user_name;
       }
-    };
+    }
+  };
 </script>
 
 <style scoped>
-.user-tab-over {
-  margin-bottom: 0px;
+.user-tab-cover {
   float: left;
   position: relative;
   height: 100%;
+  display: flex;
+  /* align-content: center; */
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 .user-tab-avatar {
-  display: inline;
-  line-height: 1.5rem;
-  font-size: 2rem;
+  display: block;
+  height: 2.5rem;
+}
+.user-info-img {
+  display: block;
+  height: 2.5rem;
+  width: 2.5rem;
 }
 .user-tab-da {
-  display: inline;
-  line-height: 1.5rem;
-  font-size: 1rem;
+  display: flex;
+  flex-direction: column-reverse;
+  font-size: 0.1em;
+  color: #304156ad;
 }
 </style>

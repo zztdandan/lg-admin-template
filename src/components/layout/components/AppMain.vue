@@ -3,30 +3,38 @@
   <!-- 这是存储iframe页面的控件 -->
   <section class="app-main">
     <!-- <transition-group name="fade-transform" mode="out-in"> -->
-      <!-- or name="fade" -->
-      <!-- <router-view :key="key"></router-view> -->
-      <div v-for="one_page in tab_list" v-bind:key="one_page.id">
-        <keep-alive include="frame-temp,vhtml-panel">
-          <frame-temp :url="one_page.url"  :page_id="one_page.id" :class="is_active_class(one_page.id)"></frame-temp>
-          <!-- <vhtml-panel :url.sync="one_page.url" :class="is_active_class(one_page.id)"></vhtml-panel> -->
-        </keep-alive>
+    <!-- or name="fade" -->
+    <!-- <router-view :key="key"></router-view> -->
+    <div v-for="one_page in tab_list" v-bind:key="one_page.id">
+
+      <!-- 对于没有对应控件的router的地址，使用frame方式，对于有确切控件的router地址，使用router方式 -->
+      <div v-if="is_frame(one_page.url)">
+        <frame-temp :url="one_page.url" :page_id="one_page.id" :class="is_active_class(one_page.id)"></frame-temp>
       </div>
+
+      <!-- <vhtml-panel :url.sync="one_page.url" :class="is_active_class(one_page.id)"></vhtml-panel> -->
+    
+    </div>
+  <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
 
     <!-- </transition-group> -->
   </section>
 </template>
 
 <script>
+  import "linqjs";
   import FrameTemp from "components/FrameTemp";
-  import VhtmlPanel from "components/VHtmlPanel";
+  // import VhtmlPanel from "components/VHtmlPanel";
   export default {
     name: "AppMain",
     computed: {
       active_tab() {
         return this.$store.getters.ACTIVED_PAGE;
       },
-      tab_list(){
-            return this.$store.getters.TABS;
+      tab_list() {
+        return this.$store.getters.TABS;
       }
     },
     data: function() {
@@ -52,14 +60,18 @@
         if (typeof a_id !== "string") {
           this.$router.push({ path: "/" });
         } else {
-          this.$router.push({ name: "home_menu", params: { page_id: a_id } });
+          if (this.$options.methods.is_frame(newval.url)) {
+            this.$router.push({ name: "home_menu", params: { page_id: a_id } });
+          } else {
+            this.$router.push({ path: newval.url });
+          }
         }
         //上面是使用伪切换
       }
     },
     components: {
-      FrameTemp,
-      VhtmlPanel
+      FrameTemp
+      // VhtmlPanel
     },
     methods: {
       is_active_class(one_page_id) {
@@ -70,8 +82,21 @@
           return "inactive_page";
         }
       },
-      frame_ref(page_id){
-        return "frame_"+page_id;
+      frame_ref(page_id) {
+        return "frame_" + page_id;
+      },
+      is_frame(url) {
+        console.log("ifram_check");
+        if (url.indexOf("http") >= 0) {
+         
+          return true;
+        }
+        if (url.indexOf("html") >= 0) {
+        
+          return true;
+        }
+        
+        return false;
       }
     }
   };
@@ -86,7 +111,7 @@
 }
 .active_page {
   display: block;
-height: fit-content;
+  height: fit-content;
 }
 .inactive_page {
   display: none;
