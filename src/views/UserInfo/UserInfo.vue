@@ -4,9 +4,11 @@
         <img :src="avatar" class="user-info-avatar">
         <p>{{name}}</p>
     </div>
+   
 </template>
 
 <script>
+
     export default {
       name: "user-info",
       data: function() {
@@ -17,6 +19,7 @@
           avatar: info.user_avatar
         };
       }
+     
     };
 </script>
 

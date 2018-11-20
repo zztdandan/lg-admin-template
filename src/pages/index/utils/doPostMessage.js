@@ -3,7 +3,6 @@ import { setIframeHeight1 } from "./PostMessageFunction/setIframeHeight.js";
 export default async function(rsdata, that_vue) {
   try {
     let req = rsdata;
-    let c = setIframeHeight;
     if (req.type === "simple") {
       const req_name = req.req_name;
       const req_param = JSON.stringify(req.req_param);
